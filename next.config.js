@@ -33,6 +33,8 @@ const nextConfig = {
     return [
       {
         source: `${process.env.NEXT_PUBLIC_API_BASE_PATH}/:match*`,
+        // http://localhost:8000
+        destination: `${process.env.API_BASE_URL}:/match*`,
       },
     ];
   },

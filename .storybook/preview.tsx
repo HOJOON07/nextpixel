@@ -1,3 +1,4 @@
+// @ts-ignore
 // import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import React from "react";
 import { theme } from "./../src/themes/index";
@@ -43,28 +44,25 @@ a{
 }
 `;
 
-export const decorators = [
-  withThemeFromJSXProvider({
-    Provider: ThemeProvider,
-    themes: theme,
-    GlobalStyles,
-  }),
-];
+// export const decorators = [
+//   withThemeFromJSXProvider({
+//     Provider: ThemeProvider,
+//     themes: theme,
+//     GlobalStyles,
+//   }),
+// ];
 
-const OriginalNextImage = NextImage.default;
+// const OriginalNextImage = NextImage.default;
 
-Object.defineProperty(NextImage, "default", {
-  configurable: true,
-  value: (props) =>
-    typeof props.src === "string" ? (
-      <OriginalNextImage
-        {...props}
-        unoptimized
-        blurDataURL={props.src}
-      ></OriginalNextImage>
-    ) : (
-      <OriginalNextImage {...props}></OriginalNextImage>
-    ),
-});
+// Object.defineProperty(NextImage, "default", {
+//   configurable: true,
+//   //@ts-ignore
+//   value: (props) =>
+//     typeof props.src === "string" ? (
+//       <OriginalNextImage {...props} blurDataURL={props.src}></OriginalNextImage>
+//     ) : (
+//       <OriginalNextImage {...props}></OriginalNextImage>
+//     ),
+// });
 
 export default preview;

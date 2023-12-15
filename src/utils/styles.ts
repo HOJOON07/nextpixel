@@ -3,7 +3,6 @@
 
 import { theme } from "@/themes";
 import type { ResponisveProp, Responsive } from "@/types/styles";
-import App from "next/app";
 
 export type AppTheme = typeof theme;
 

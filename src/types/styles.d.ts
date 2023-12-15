@@ -14,10 +14,10 @@ export type ResponisveProp<T> = {
   xl?: T;
 };
 
-export type Responsive<T> = ResponisveProp<T>;
+export type Responsive<T> = T | ResponisveProp<T>;
 
 /**
- * Fles
+ * Flex
  */
 
 type SelfPosition =
@@ -76,6 +76,15 @@ export type CSSPropertyJustifyItems =
   | (string & {});
 
 export type CSSPropertyJustifyContent =
+  | CSSPropertyGlobals
+  | ContentDistribution
+  | ContentPosition
+  | "left"
+  | "normal"
+  | "right"
+  | (string & {});
+
+export type CSSPropertyFlexWrap =
   | CSSPropertyGlobals
   | "nowrap"
   | "wrap"
