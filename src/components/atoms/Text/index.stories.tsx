@@ -15,7 +15,7 @@ export default {
       ],
       control: { type: "select" },
       defaultValue: "medium",
-      // docs에 표시할 내용을 설정
+      // docs에 표시할 내용을 설정함
       description: "텍스트 변형",
       table: {
         type: {
