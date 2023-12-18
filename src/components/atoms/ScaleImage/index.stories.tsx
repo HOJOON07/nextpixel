@@ -1,54 +1,52 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-import ScaleImage from './index'
+import { Meta, StoryFn } from "@storybook/react";
+import ScaleImage from "./index";
 
 export default {
-  title: 'Atoms/ScaleImage',
+  title: "Atoms/ScaleImage",
   argTypes: {
     src: {
-      control: { type: 'text' },
-      description: '이미지 URL',
+      control: { type: "text" },
+      description: "이미지 URL",
       table: {
-        type: { summary: 'string' },
+        type: { summary: "string" },
       },
     },
     width: {
-      control: { type: 'number' },
+      control: { type: "number" },
       defaultValue: 320,
-      description: '이미지 가로폭',
+      description: "이미지 가로폭",
       table: {
-        type: { summary: 'number' },
+        type: { summary: "number" },
       },
     },
     height: {
-      control: { type: 'number' },
-      description: '이미지 세로폭',
+      control: { type: "number" },
+      description: "이미지 세로폭",
       defaultValue: 320,
       table: {
-        type: { summary: 'number' },
+        type: { summary: "number" },
       },
     },
     containerWidth: {
-      control: { type: 'number' },
+      control: { type: "number" },
       defaultValue: 320,
-      description: '가로폭',
+      description: "가로폭",
       table: {
-        type: { summary: 'number' },
+        type: { summary: "number" },
       },
     },
     conatinerHeight: {
-      control: { type: 'number' },
-      description: '세로폭',
+      control: { type: "number" },
+      description: "세로폭",
       defaultValue: 320,
       table: {
-        type: { summary: 'number' },
+        type: { summary: "number" },
       },
     },
   },
-} as ComponentMeta<typeof ScaleImage>
+} as Meta<typeof ScaleImage>;
 
-const Template: ComponentStory<typeof ScaleImage> = (args) => (
-  <ScaleImage {...args} />
-)
+const Template: StoryFn<typeof ScaleImage> = (args) => <ScaleImage {...args} />;
 
-export const Normal = Template.bind({})
-Normal.args = { src: '/images/sample/1.jpg' }
+export const Normal = Template.bind({});
+Normal.args = { src: "/images/sample/1.jpg" };

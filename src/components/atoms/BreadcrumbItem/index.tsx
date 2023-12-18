@@ -9,6 +9,7 @@ const BreadcrumbItem = styled.li`
 
   &:not(:first-child) {
     // 첫번재 요소 제외하고 슬래쉬(/)를 앞에 붙이게 한다.
+
     &::before {
       content: "/";
       color: ${({ theme }) => theme.colors.gray};

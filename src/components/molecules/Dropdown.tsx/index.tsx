@@ -2,6 +2,112 @@ import Text from "@/components/atoms/Text";
 import Flex from "@/components/layout/Flex";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { DropdownItem, DropdownItemProps, DropdownProps } from "./types";
+
+const DrodownItem = (props: DropdownItemProps) => {
+  const { item } = props;
+
+  return (
+    <Flex alignItems="center">
+      <Text margin={0} variant="small">
+        {item.label ?? item.value}
+      </Text>
+    </Flex>
+  );
+};
+
+const Dropdown = (props: DropdownProps) => {
+  const { onChange, name, value, options, hasError } = props;
+  const initialItem = options.find((item) => item.value === value);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(initialItem);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleDocumentClick = useCallback((e: MouseEvent | TouchEvent) => {
+    // 자기 자신을 클릭하면 아무것도 하지 않으려고
+    if (dropdownRef.current) {
+      // 코드 설명 :
+      const elements = dropdownRef.current.querySelectorAll("*");
+      for (let i = 0; i < elements.length; i++) {
+        if (elements[i] == e.target) return;
+      }
+    }
+    setIsOpen(false);
+  }, []);
+
+  const handleMouseDown = (e: React.SyntheticEvent) => {
+    setIsOpen((isOpen) => !isOpen);
+    e.stopPropagation();
+  };
+
+  const handleSelectValue = (
+    e: React.FormEvent<HTMLDivElement>,
+    item: DropdownItem
+  ) => {
+    e.stopPropagation();
+
+    setSelectedItem(item);
+    setIsOpen(false);
+    onChange && onChange(item);
+  };
+
+  useEffect(() => {
+    //화면 밖이랑 터치에 대한 이벤트 구독 설정
+    document.addEventListener("click", handleDocumentClick, false);
+    document.addEventListener("touchend", handleDocumentClick, false);
+
+    return function cleanup() {
+      document.removeEventListener("click", handleDocumentClick, false);
+      document.removeEventListener("touchend", handleDocumentClick, false);
+
+      //처음 한번만 호출
+    };
+  }, []);
+
+  return (
+    <DropdownRoot ref={dropdownRef}>
+      <DropdownControl
+        hasError={hasError}
+        onMouseDown={handleMouseDown}
+        onTouchEnd={handleMouseDown}
+        data-testid="dropdown-control"
+      >
+        {/* 선택한거 있으면 */}
+        {selectedItem && (
+          <DropdownValue>
+            <DrodownItem item={selectedItem}></DrodownItem>
+          </DropdownValue>
+        )}
+        {!selectedItem && (
+          <DropdownPlaceholder>{props?.placeholder}</DropdownPlaceholder>
+        )}
+        <input
+          type="hidden"
+          name={name}
+          value={selectedItem?.value ?? ""}
+          onChange={() => onChange && onChange(selectedItem)}
+        ></input>
+        <DropdownArrow isOpen={isOpen}></DropdownArrow>
+      </DropdownControl>
+      {isOpen && (
+        <DropdownMenu>
+          {props.options.map((item, idx) => (
+            <DropdownOption
+              key={idx}
+              onMouseDown={(e) => handleSelectValue(e, item)}
+              onClick={(e) => handleSelectValue(e, item)}
+              data-testid="dropdown-option"
+            >
+              <DrodownItem item={item}></DrodownItem>
+            </DropdownOption>
+          ))}
+        </DropdownMenu>
+      )}
+    </DropdownRoot>
+  );
+};
+
+export default Dropdown;
 
 const DropdownRoot = styled.div`
   position: relative;
@@ -51,7 +157,7 @@ const DropdownArrow = styled.div<{ isOpen?: boolean }>`
   width: 0;
 `;
 
-const DropdownMeny = styled.div`
+const DropdownMenu = styled.div`
   background-color: #ffffff;
   border: ${({ theme }) => theme.colors.border};
   box-shadow:
@@ -75,103 +181,3 @@ const DropdownOption = styled.div`
     background-color: #f9f9f9;
   }
 `;
-
-interface DrodownItem {
-  value: string | number | null;
-  label?: string;
-}
-
-interface DropdownItemProps {
-  item: DrodownItem;
-}
-
-interface DropdownProps {
-  options: DrodownItem[];
-  value?: string | number;
-  name?: string;
-  placeholder?: string;
-  hasError?: boolean;
-  onChange?: (selected?: DrodownItem) => boolean;
-}
-
-const DrodownItem = (props: DropdownItemProps) => {
-  const { item } = props;
-
-  return (
-    <Flex alignItems="center">
-      <Text margin={0} variant="small">
-        {item.label ?? item.value}
-      </Text>
-    </Flex>
-  );
-};
-
-const Dropdown = (props: DropdownProps) => {
-  const { onChange, name, value, options, hasError } = props;
-  const initialItem = options.find((item) => item.value === value);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(initialItem);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const handleDocumentClick = useCallback((e: MouseEvent | TouchEvent) => {
-    // 자기 자신을 클릭하면 아무것도 하지 않으려고
-    if (dropdownRef.current) {
-      // 코드 설명 :
-      const elements = dropdownRef.current.querySelectorAll("*");
-      for (let i = 0; i < elements.length; i++) {
-        if (elements[i] == e.target) return;
-      }
-    }
-    setIsOpen(false);
-  }, []);
-
-  const handeMouseDown = (e: React.SyntheticEvent) => {
-    setIsOpen((isOpen) => !isOpen);
-    e.stopPropagation();
-  };
-
-  const handleSelectValue = (
-    e: React.FormEvent<HTMLDivElement>,
-    item: DrodownItem
-  ) => {
-    e.stopPropagation();
-
-    setSelectedItem(item);
-    setIsOpen(false);
-    onChange && onChange(item);
-  };
-
-  useEffect(() => {
-    //화면 밖이랑 터치에 대한 이벤트 구독 설정
-    document.addEventListener("click", handleDocumentClick, false);
-    document.addEventListener("touchend", handleDocumentClick, false);
-
-    return function cleanup() {
-      document.removeEventListener("click", handleDocumentClick, false);
-      document.removeEventListener("touchend", handleDocumentClick, false);
-
-      //처음 한번만 호출
-    };
-  }, []);
-
-  return (
-    <DropdownRoot ref={dropdownRef}>
-      <DropdownControl
-        hasError={hasError}
-        onMouseDown={handeMouseDown}
-        onTouchEnd={handeMouseDown}
-        data-testid="dropdown-control"
-      >
-        {/* 선택한거 있으면 */}
-        {selectedItem && (
-          <DropdownValue>
-            <DrodownItem item={selectedItem}></DrodownItem>
-          </DropdownValue>
-        )}
-        {!selectedItem && (
-          <DropdownPlaceholder>{props?.placeholder}</DropdownPlaceholder>
-        )}
-      </DropdownControl>
-    </DropdownRoot>
-  );
-};

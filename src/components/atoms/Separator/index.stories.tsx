@@ -1,7 +1,7 @@
-import { ComponentMeta } from '@storybook/react'
-import Separator from './index'
+import { Meta } from "@storybook/react";
+import Separator from "./index";
 
-export default { title: 'Atoms/Separator' } as ComponentMeta<typeof Separator>
+export default { title: "Atoms/Separator" } as Meta<typeof Separator>;
 
 export const Standard = () => (
   <>
@@ -9,4 +9,4 @@ export const Standard = () => (
     <Separator>and</Separator>
     <Separator />
   </>
-)
+);
