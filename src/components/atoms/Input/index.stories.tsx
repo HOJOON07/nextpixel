@@ -29,3 +29,11 @@ export default {
     },
   },
 } as Meta<typeof Input>;
+
+const Template: StoryFn<typeof Input> = (args) => <Input {...args}></Input>;
+
+export const Normal = Template.bind({});
+
+export const Error = Template.bind({});
+
+Error.args = { hasError: true };
