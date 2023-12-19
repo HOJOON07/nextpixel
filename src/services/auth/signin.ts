@@ -1,6 +1,5 @@
 import { ApiContext, User } from "@/types/data";
 import { fetcher } from "@/utils";
-import { json } from "stream/consumers";
 
 export type SigninParams = {
   username: string;
@@ -30,3 +29,5 @@ const signin = async (
     }
   );
 };
+
+export default signin;

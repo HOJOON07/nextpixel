@@ -25,5 +25,5 @@ export interface Product {
 }
 
 export interface ApiContext {
-  apiRootUrl: strin;
+  apiRootUrl: string;
 }
