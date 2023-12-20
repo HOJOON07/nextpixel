@@ -3,8 +3,10 @@ import Separator from "@/components/atoms/Separator";
 import Box from "@/components/layout/Box";
 import Flex from "@/components/layout/Flex";
 import Breadcrumb from "@/components/molecules/Breadcrumb";
-import UserProfile from "@/components/organisms/UserProfile";
 import Layout from "@/components/templates/Layout";
+import UserProductCardListContainer from "@/containers/UserProductCardListContainer";
+import UserProfileContainer from "@/containers/UserProfileContainer";
+import getAllUsers from "@/services/users/get-all-users";
 import getUser from "@/services/users/get-user";
 import { ApiContext } from "@/types/data";
 import {
@@ -13,7 +15,6 @@ import {
   InferGetStaticPropsType,
   NextPage,
 } from "next";
-import { getStaticProps } from "next/dist/build/templates/pages";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -53,7 +54,10 @@ const UserPage: NextPage<UserPageProps> = ({
             <Box marginBottom={1}>
               {/* 사용자 프로필 컨테이너
               사용자 정보를 표시하는 곳이고, useUser로 항상 최신 데이터 -> ISR */}
-              <UserProfileContainer></UserProfileContainer>
+              <UserProfileContainer
+                userId={id}
+                user={user}
+              ></UserProfileContainer>
             </Box>
             <Box marginBottom={1}>
               <Separator></Separator>
@@ -70,7 +74,7 @@ const UserPage: NextPage<UserPageProps> = ({
   );
 };
 
-export const getStaticProps: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const context: ApiContext = {
     apiRootUrl: process.env.API_BASE_URL || "http://localhost:5000",
   };
@@ -94,13 +98,15 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
     getUser(context, { id: userId }),
     getAllProducts(context, { userId }),
   ]);
-
+  // 사용자 정보, 사용자가 소유한 상품 리스트
+  // 데이터의 유효시간은 10초로 한다.
   return {
     props: {
       id: userId,
       user,
       products: products ?? [],
     },
+    revalidate: 10,
   };
 };
 

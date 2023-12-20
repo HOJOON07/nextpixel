@@ -1,4 +1,5 @@
 import UserProfile from "@/components/organisms/UserProfile";
+import useUser from "@/services/users/use-user";
 import { ApiContext, User } from "@/types/data";
 
 const context: ApiContext = {
@@ -14,7 +15,7 @@ interface UserProfileContainerProps {
 
 const UserProfileContainer = ({ userId, user }: UserProfileContainerProps) => {
   // 최신 사용자 정보를 얻어 업데이트가 있을 때는 initial에 지정돼 있는 데이터를 덮어 쓴다.
-  const { user: u } = userUser(context, { id: userId, initial: user });
+  const { user: u } = useUser(context, { id: userId, initial: user });
 
   if (!u) return <div>Loading...</div>;
   return (
@@ -26,3 +27,5 @@ const UserProfileContainer = ({ userId, user }: UserProfileContainerProps) => {
     ></UserProfile>
   );
 };
+
+export default UserProfileContainer;

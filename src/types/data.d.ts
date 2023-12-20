@@ -1,6 +1,6 @@
 import exp from "constants";
 
-export type Category = "shoes" | "clothe" | "book";
+export type Category = "shoes" | "clothes" | "book";
 export type Condition = "new" | "used";
 
 export interface User {

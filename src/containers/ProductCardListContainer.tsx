@@ -1,44 +1,65 @@
+import RectLoader from "@/components/atoms/RectLoader";
+import Box from "@/components/layout/Box";
 import ProductCard from "@/components/organisms/ProductCard";
 import ProductCardList from "@/components/organisms/ProductCardList";
-import { ApiContext, Product } from "@/types/data";
+import useSearch from "@/services/products/use-search";
+import { ApiContext, Category, Condition } from "@/types/data";
 import Link from "next/link";
-import { Fragment } from "react";
 
 const context: ApiContext = {
   apiRootUrl: process.env.NEXT_PUBLIC_API_BASE_PATH || "/api/proxy",
 };
 
-interface UserProductCardListContainerProps {
-  userId: number;
-  products?: Product[];
+interface ProductCardListContainerProps {
+  /**
+   * 검색 쿼리 - 카테고리
+   */
+  category?: Category;
+
+  /**
+   * 검색 쿼리 - 상품 상태
+   */
+
+  conditions?: Condition[];
 }
 
-const UserProductCardListContainer = ({
-  userId,
-  products,
-}: UserProductCardListContainerProps) => {
-  const { products: useProducts } = useSearch(context, {
-    userId,
-    initial: products,
-  });
+const ProductCardListContainer = ({
+  category,
+  conditions,
+}: ProductCardListContainerProps) => {
+  const { products, isLoading } = useSearch(context, { category, conditions });
 
   return (
     <ProductCardList>
-      {useProducts.map((product) => (
-        <Fragment key={product.id}>
-          <Link href={`/products/${product.id}`} passHref>
-            <a>
-              <ProductCard
-                variant="small"
-                title={product.title}
-                price={product.price}
-                imageUrl={product.imageUrl}
-              ></ProductCard>
-            </a>
-          </Link>
-        </Fragment>
-      ))}
+      {isLoading &&
+        Array.from(Array(16), (_, key) => (
+          <Box key={key}>
+            <Box display={{ base: "none", md: "block" }}>
+              <RectLoader width={240} height={240}></RectLoader>
+            </Box>
+            <Box display={{ base: "block", md: "none" }}>
+              <RectLoader width={160} height={160}></RectLoader>
+            </Box>
+          </Box>
+        ))}
+      {!isLoading &&
+        products.map((product) => (
+          <Box key={product.id}>
+            <Link href={`/products/${product.id}`}>
+              <a>
+                <ProductCard
+                  variant="listing"
+                  title={product.title}
+                  price={product.price}
+                  imageUrl={product.imageUrl}
+                  blurDataUrl={product.blurDataUrl}
+                ></ProductCard>
+              </a>
+            </Link>
+          </Box>
+        ))}
     </ProductCardList>
   );
 };
-export default UserProductCardListContainer;
+
+export default ProductCardListContainer;
