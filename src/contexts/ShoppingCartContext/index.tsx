@@ -38,6 +38,8 @@ export const ShoppingCartContextProvider = ({
   return (
     <ShoppingCartContext.Provider
       value={{ cart: cartState, addProductToCart, removeProductFromCart }}
-    ></ShoppingCartContext.Provider>
+    >
+      {children}
+    </ShoppingCartContext.Provider>
   );
 };

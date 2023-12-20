@@ -13,5 +13,5 @@ export interface DropdownProps {
   name?: string;
   placeholder?: string;
   hasError?: boolean;
-  onChange?: (selected?: DrodownItem) => boolean;
+  onChange?: (selected?: DrodownItem) => void;
 }
