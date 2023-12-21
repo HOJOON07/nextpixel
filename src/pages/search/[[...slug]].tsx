@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/molecules/Breadcrumb";
 import FilterGroup from "@/components/molecules/FilterGroup";
 import ProductCardList from "@/components/organisms/ProductCardList";
 import Layout from "@/components/templates/Layout";
+import ProductCardListContainer from "@/containers/ProductCardListContainer";
 import { Category, Condition } from "@/types/data";
 import exp from "constants";
 import { NextPage } from "next";
@@ -131,7 +132,10 @@ const SearchPage: NextPage = () => {
               >
                 상품목록
               </Text>
-              <ProductCardListContainer></ProductCardListContainer>
+              <ProductCardListContainer
+                category={slug.length > 0 ? slug[slug.length - 1] : undefined}
+                conditions={conditions}
+              ></ProductCardListContainer>
             </Box>
           </Flex>
         </Flex>

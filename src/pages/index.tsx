@@ -4,6 +4,7 @@ import Flex from "@/components/layout/Flex";
 import ProductCard from "@/components/organisms/ProductCard";
 import ProductCardCarousel from "@/components/organisms/ProductCardCarousel";
 import Layout from "@/components/templates/Layout";
+import getAllProducts from "@/services/products/get-all-products";
 import { ApiContext, Product } from "@/types/data";
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
@@ -20,8 +21,8 @@ const HomePage: NextPage<HomePageProps> = ({
     return (
       <ProductCardCarousel>
         {products.map((product: Product, index: number) => (
-          <Box paddingLeft={i === 0 ? 0 : 2} key={product.id}>
-            <Link href={`/products/${p.id}`} passHref>
+          <Box paddingLeft={index === 0 ? 0 : 2} key={product.id}>
+            <Link href={`/products/${product.id}`} passHref>
               <a>
                 <ProductCard
                   variant="small"
@@ -108,7 +109,6 @@ const HomePage: NextPage<HomePageProps> = ({
     </Layout>
   );
 };
-export default HomePage;
 
 export const getStaticProps: GetStaticProps = async () => {
   const context: ApiContext = {
@@ -129,3 +129,5 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 60,
   };
 };
+
+export default HomePage;

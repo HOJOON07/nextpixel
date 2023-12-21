@@ -1,5 +1,4 @@
 import { Product } from "@/types/data";
-import { Epilogue } from "next/font/google";
 import React, { useContext, useReducer } from "react";
 import { ADD_PRODUCT, REMOVE_PRODUCT, shopReducer } from "./reducer";
 

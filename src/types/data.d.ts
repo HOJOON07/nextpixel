@@ -1,18 +1,20 @@
-import exp from "constants";
-
+// 상품 카테고리
 export type Category = "shoes" | "clothes" | "book";
+// 상품 상태
 export type Condition = "new" | "used";
 
-export interface User {
+// 사용자
+export type User = {
   id: number;
   username: string;
   displayName: string;
   email: string;
   profileImageUrl: string;
   description: string;
-}
+};
 
-export interface Product {
+// 상품
+export type Product = {
   id: number;
   category: Category;
   title: string;
@@ -22,8 +24,9 @@ export interface Product {
   price: number;
   condition: Condition;
   owner: User;
-}
+};
 
-export interface ApiContext {
+// API 컨텍스트
+export type ApiContext = {
   apiRootUrl: string;
-}
+};

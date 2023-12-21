@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/molecules/Breadcrumb";
 import Layout from "@/components/templates/Layout";
 import UserProductCardListContainer from "@/containers/UserProductCardListContainer";
 import UserProfileContainer from "@/containers/UserProfileContainer";
+import getAllProducts from "@/services/products/get-all-products";
 import getAllUsers from "@/services/users/get-all-users";
 import getUser from "@/services/users/get-user";
 import { ApiContext } from "@/types/data";

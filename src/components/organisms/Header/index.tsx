@@ -17,12 +17,6 @@ import { Box } from "@mui/material";
 import Link from "next/link";
 import styled from "styled-components";
 
-const HeaderRoot = styled.header`
-  height: 88px;
-  padding: ${({ theme }) => theme.space[2]} 0px;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
-`;
-
 const Nav = styled(Flex)`
   & > span:not(:first-child) {
     margin-left: ${({ theme }) => theme.space[2]};
@@ -38,6 +32,12 @@ const Anchor = styled(Text)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const HeaderRoot = styled.header`
+  height: 88px;
+  padding: ${({ theme }) => theme.space[2]} 0px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 const Header = () => {

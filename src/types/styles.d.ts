@@ -1,25 +1,19 @@
-import { CSSPropertyFlexDirection } from "./styles.d";
-import { type } from "os";
-
+/* eslint-disable @typescript-eslint/ban-types */
 /**
  * Responsive 속성
- * CSS 속성값을 브레이크 포인트별로 설정할 수 있다.
- * T는 CSS 속성값의 타입
  */
-export type ResponisveProp<T> = {
+export type ResponsiveProp<T> = {
   base?: T;
   sm?: T;
   md?: T;
   lg?: T;
   xl?: T;
 };
-
-export type Responsive<T> = T | ResponisveProp<T>;
+export type Responsive<T> = T | ResponsiveProp<T>;
 
 /**
  * Flex
  */
-
 type SelfPosition =
   | "center"
   | "end"
@@ -50,6 +44,7 @@ export type CSSPropertyAlignItems =
   | "baseline"
   | "normal"
   | "stretch"
+  // 코드 자동 보조
   | (string & {});
 
 export type CSSPropertyAlignContent =
@@ -120,7 +115,6 @@ export type CSSPropertyAlignSelf =
 /**
  * Grid
  */
-
 type GridLine = "auto" | (string & {});
 
 export type CSSPropertyGridColumn =

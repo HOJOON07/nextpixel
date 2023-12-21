@@ -4,6 +4,7 @@
 
 import { Responsive } from "@/types/styles";
 import { Color, Space, toPropValue } from "@/utils/styles";
+import React from "react";
 import styled from "styled-components";
 
 export type BoxProps = {
@@ -26,6 +27,7 @@ export type BoxProps = {
   paddingRight?: Responsive<Space>;
   paddingBottom?: Responsive<Space>;
   paddingLeft?: Responsive<Space>;
+  children?: React.ReactNode;
 };
 
 /**
